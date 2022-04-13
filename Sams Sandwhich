@@ -1,1 +1,116 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Styling</title>
+	<link rel="stylesheet" href="Sams_sandwich.css">
+</head>
 
+<body>
+	<div class="main_content">
+	<h1>SAM'S SANDWHICH SHOP</h1>
+	<p></p>
+	<h2>Place your order here:</h2>
+	<form name="order">
+		
+	<h3>Sandwhich</h3>
+	<label><input class="addCheck" type="radio" name"bread_length" data-price="$6.99" value="6inch">6 Inch</label>
+	<label><input class="addCheck" type="radio" name"bread_length" data-price="$12.50" value="12inch">12 Inch</label>
+	
+	<h3>Bread</h3>
+	<label><input class="addCheck" type="radio" name"bread_type" data-price="$3" value="White">White</label>
+	<label><input class="addCheck" type="radio" name"bread_type" data-price="$3" value="Wholegrain">WholeGrain</label>
+	<label><input class="addCheck" type="radio" name"bread_type" data-price="$3.99" value="Italian">Italian</label>
+	<label><input class="addCheck" type="radio" name"bread_type" data-price="$5" value="Rye">Rye</label>
+	<label><input class="addCheck" type="radio" name"bread_type" data-price="$5.50" value="Wrap">Wrap</label>
+	
+	<h3>Cheese</h3>
+	<label><input class="addCheck" type="radio" name"cheese" data-price="$3" value="Swiss">Swiss</label>
+	<label><input class="addCheck" type="radio" name"cheese" data-price="3.50" value="Cheddar">Cheddar</label>
+	<label><input class="addCheck" type="radio" name"cheese" data-price="1" value="Feta">Feta</label>
+	
+	<h3>Meat</h3>
+	<label><input class="addCheck" type="radio" data-price="$3.50" value="Ham">Ham</label>
+	<label><input class="addCheck" type="radio" data-price="$3" value="Tuna">Tuna</label>
+	<label><input class="addCheck" type="radio" data-price="$4.50" value="Turkey">Turkey</label>
+	<label><input class="addCheck" type="radio" data-price="$3" value="Salami">Salami</label>
+	<label><input class="addCheck" type="radio" data-price="$5" value="Meatball">Meatball</label>
+	<label><input class="addCheck" type="radio" data-price="$4" value="Chicken">Chicken</label>
+	
+	<h3>Salads</h3>
+	<label><input class="addCheck" type="checkbox" data-price="$3.50" value="Lettuce">Lettuce</label>
+	<label><input class="addCheck" type="checkbox" data-price="$3" value="Tomatoes">Tomatoes</label>
+	<label><input class="addCheck" type="checkbox" data-price="$2.99" value="Carrot">Carrot</label>
+	<label><input class="addCheck" type="checkbox" data-price="$2.99" value="Cucumber">Cucumber</label>
+	</form>
+		<br>
+
+	<h2>Personal Details</h2>
+	<label>Your name:</label><input type="text" id="name" placeholder="Please type your name" pattern="[a-zA-Z]\w{1,39}"><br>
+	<label>Your cellphone number: </label><input id="cellphone" type="tel" placeholder="Please enter your phone number" pattern="02[0-9]\d{6,8}"><br>
+		
+		<h2>Order Summary</h2>
+	<div id="cbResults"></div>
+	<div id="radioResults"></div>
+		
+	<input type="button" value="submit" id="submit_button" class="submitButton" onclick="checkForm()"><br><br>
+	<script src="Sams_sandwich_v1.js"></script>
+	</div>
+	
+	<style>
+	   @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&family=Fredoka&family=Source+Sans+Pro:wght@700&display=swap');
+	   @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&family=Fredoka:wght@400;600&family=Source+Sans+Pro:wght@700&display=swap');
+	</style>
+	
+</body>
+</html>
+
+
+// JavaScript Document
+
+function loopForm(form) {
+	alert("Check your order please"); //test alert
+	var sandwhichOrder = []; //defines an empty list
+	for ( var i = 0; i < form.elements.length; i++ ) { //for loop through the form
+		if ( form.elements[i].type == "radio" ) {
+			if (form.elements[i].checked ) {
+				sandwhichOrder.push(form.elements [i].value);
+				alert(sandwhichOrder); //test alert
+			}
+		}
+		if ( form.elements [i].type == "checkbox" ){
+			if (form.elements[i].checked) {
+				sandwhichOrder.push(form.elements[i].value + " ");
+				alert(sandwhichOrder); //test alert
+			}
+		}
+		//once the for loop has gone through each element in the form
+		//it will output the listu sing the DOM
+		document.getElementById("radioResults").innerHTML = sandwhichOrder;
+	}
+}
+
+function checkForm() {
+	//creating a variable to access each item with the class addCheck
+	var addItems = document.getElementsByClassName( "addCheck");
+	//Create an empty object array
+	var checkedAddItems = [];
+	var addCost = 0; //sets the cost to 0
+	//this for loop goes through all items with the class name addCheck
+	for ( var i = 0; i < addItems.length; i++ ) {
+		if ( addItems[ i ].checked) { //if an item has been checked do the following
+		//each items that has been checked is "pushed to the empty list"
+			checkedAddItems.push( ' ' + addItems[ i ].value );
+			alert(checkedAddItems); //test alert
+			//finds the selected item and adds on the price
+			addCost += Number( addItems[ i ].dataset.price);
+			alert(addCost);	//test alert
+			var num = addCost;
+	        var n = num.toFixed(2);
+		}
+	}
+	//once the for loop has iterated over every checked item
+	//it locates the empty div prints out the array and addCost
+	cbResults.innerHTML= checkedAddItems + "  Total Cost: $" + n;	
+	
+}
